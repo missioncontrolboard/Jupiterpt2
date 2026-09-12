@@ -24,20 +24,19 @@ body{
   color:#dfe9ff; min-height:100vh; overflow-x:hidden;
 }
 
-/* ============ FLYING DELOREAN BACKGROUND ============ */
+
+/* ============ FLYING DELOREAN BACKGROUND (JS-driven random flights) ============ */
 .delorean-layer{
   position:fixed; left:0; top:0; z-index:1;
   width:min(34vw, 340px); pointer-events:none;
-  animation:flyAcross 13s linear infinite;
-  opacity:.9;
+  opacity:.9; will-change:transform, opacity;
   filter:drop-shadow(0 0 16px rgba(53,214,255,.35));
 }
-@keyframes flyAcross{
-  0%   { transform:translate(-35vw, 105vh) rotate(-32deg); }
-  100% { transform:translate(108vw, -48vh) rotate(-32deg); }
-}
+.delorean-tilt{will-change:transform;}
+/* gentle hover bob INSIDE the flight path (doesn't break the loop) */
 .delorean-bob{animation:hoverBob 1.6s ease-in-out infinite alternate;}
 @keyframes hoverBob{from{transform:translateY(0);} to{transform:translateY(-9px);}}
+/* flaming tire trails */
 .trail{transform-origin:right center; animation:trailFlick .22s ease-in-out infinite;}
 @keyframes trailFlick{0%,100%{opacity:1; transform:scaleX(1);} 50%{opacity:.55; transform:scaleX(.82);}}
 
@@ -49,6 +48,8 @@ header{padding:22px 26px 8px; text-align:center;}
 }
 .logo .outatime{color:var(--amber); text-shadow:0 0 12px var(--amber);}
 .tagline{font-size:11px; letter-spacing:4px; color:#7f95c9; margin-top:6px;}
+
+/* time-circuit rows, movie style: destination red, present green, departed yellow */
 .circuits{
   display:flex; flex-wrap:wrap; justify-content:center; gap:18px;
   margin:20px auto 4px; max-width:1100px;
@@ -65,6 +66,7 @@ header{padding:22px 26px 8px; text-align:center;}
 .c-dest{border-color:#7a3a10;} .c-dest .row-label{color:var(--orange);} .c-dest .digits{color:var(--orange); text-shadow:0 0 10px var(--orange);}
 .c-pres{border-color:#1d6b40;} .c-pres .row-label{color:var(--green);} .c-pres .digits{color:var(--green); text-shadow:0 0 10px var(--green);}
 .c-last{border-color:#8a741a;} .c-last .row-label{color:var(--amber);} .c-last .digits{color:var(--amber); text-shadow:0 0 10px var(--amber);}
+.circuit .amp{font-size:9px; letter-spacing:2px; margin-left:8px; color:#5a6a94;}
 
 /* ============ MAIN LAYOUT ============ */
 main{
@@ -84,7 +86,7 @@ main{
   box-shadow:0 14px 40px rgba(0,0,0,.65), 0 0 30px rgba(53,214,255,.10);
   position:relative;
 }
-.tv::after{
+.tv::after{ /* VHS label */
   content:"PROPERTY OF DOC BROWN • VIDEO TAPE 1985";
   position:absolute; bottom:4px; left:50%; transform:translateX(-50%);
   font-size:8px; letter-spacing:2px; color:#2b3240; white-space:nowrap;
@@ -99,6 +101,7 @@ main{
   overflow:hidden;
   box-shadow:0 0 24px rgba(53,214,255,.25) inset;
 }
+/* CRT overlays */
 .scanlines{
   position:absolute; inset:0; z-index:6; pointer-events:none;
   background:repeating-linear-gradient(0deg, rgba(0,0,0,.28) 0 2px, transparent 2px 4px);
@@ -118,6 +121,7 @@ main{
   animation:flick .12s steps(2) infinite;
 }
 @keyframes flick{50%{opacity:.4;}}
+/* slides */
 .slide{
   position:absolute; inset:0; opacity:0; transform:scale(1.06);
   transition:opacity .55s ease, transform .55s ease;
@@ -129,6 +133,7 @@ main{
   font-size:9px; letter-spacing:2px; color:#eaf6ff; z-index:5;
   background:rgba(0,0,0,.55); padding:3px 8px; border-radius:3px; white-space:nowrap;
 }
+/* TV bottom: knob + channel */
 .tv-controls{
   display:flex; align-items:center; justify-content:space-between;
   margin-top:14px; padding:0 6px;
@@ -146,12 +151,13 @@ main{
   padding:6px 14px; font-size:15px; letter-spacing:3px; font-weight:bold;
   color:var(--green); text-shadow:0 0 8px var(--green); min-width:110px; text-align:center;
 }
+/* caption + progress dots */
 .tv-caption{font-size:11px; letter-spacing:3px; color:#8fb7e8; text-align:center; min-height:15px;}
 .dots{display:flex; gap:8px;}
-.dot{width:9px; height:9px; border-radius:50%; border:1px solid var(--neon); opacity:.35; cursor:pointer;}
+.dot{width:9px; height:9px; border-radius:50%; border:1px solid var(--neon); opacity:.35;}
 .dot.active{background:var(--neon); box-shadow:0 0 8px var(--neon); opacity:1;}
 
-/* ============ BUTTON KEYPAD ============ */
+/* ============ BUTTON KEYPAD (DeLorean dashboard) ============ */
 .console{background:linear-gradient(180deg,#131b3a,#0a1128); border:2px solid #26355e;
   border-radius:14px; padding:22px; box-shadow:0 0 24px rgba(0,0,0,.5);}
 .console-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px;}
@@ -159,6 +165,7 @@ main{
 .flux-status{font-size:10px; letter-spacing:2px; color:var(--amber);}
 .flux-status .bolt{display:inline-block; animation:bolt 1s steps(2) infinite;}
 @keyframes bolt{50%{opacity:.2;}}
+
 .keypad{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:20px;}
 .tkey{
   font-family:inherit; cursor:pointer; text-align:left;
@@ -211,8 +218,9 @@ footer{
 <body>
 
   <!-- ===== FLYING DELOREAN (bottom-left -> top-right, seamless loop) ===== -->
-  <div class="delorean-layer"><div class="delorean-bob">
+  <div class="delorean-layer"><div class="delorean-tilt"><div class="delorean-bob">
     <svg viewBox="0 0 340 200" aria-hidden="true">
+      <!-- flaming trails -->
       <g class="trail">
         <path d="M118 128 L20 134 L20 118 Z" fill="#ff9d2e" opacity=".85"/>
         <path d="M118 136 L38 142 L38 128 Z" fill="#ffd23f" opacity=".9"/>
@@ -220,22 +228,29 @@ footer{
         <circle cx="26" cy="126" r="7" fill="#ffd23f" opacity=".7"/>
         <circle cx="48" cy="140" r="5" fill="#ff9d2e" opacity=".7"/>
       </g>
+      <!-- body -->
       <path d="M118 96 L150 58 L258 58 L292 96 Z" fill="#8d97a8" stroke="#39404e" stroke-width="4"/>
       <rect x="112" y="94" width="190" height="40" rx="14" fill="#aab4c4" stroke="#39404e" stroke-width="4"/>
+      <!-- gullwing window -->
       <path d="M156 92 L176 66 L246 66 L262 92 Z" fill="#0a1a33" stroke="#39404e" stroke-width="3"/>
       <path d="M176 66 L186 92" stroke="#39404e" stroke-width="3"/>
+      <!-- door line + details -->
       <path d="M205 96 L205 130" stroke="#39404e" stroke-width="3"/>
       <rect x="272" y="102" width="22" height="10" rx="3" fill="#35d6ff" opacity=".85"/>
       <rect x="118" y="102" width="18" height="8" rx="3" fill="#ff5252" opacity=".8"/>
+      <!-- wheels -->
       <circle cx="150" cy="136" r="15" fill="#232a37" stroke="#10141d" stroke-width="3"/>
       <circle cx="150" cy="136" r="6" fill="#5d6779"/>
       <circle cx="262" cy="136" r="15" fill="#232a37" stroke="#10141d" stroke-width="3"/>
       <circle cx="262" cy="136" r="6" fill="#5d6779"/>
+      <!-- under-glow -->
       <ellipse cx="205" cy="152" rx="80" ry="8" fill="#35d6ff" opacity=".3"/>
+      <!-- OUTATIME plate -->
       <rect x="196" y="112" width="34" height="12" rx="2" fill="#ffd23f" stroke="#8a741a" stroke-width="2"/>
       <text x="213" y="121" text-anchor="middle" font-family="monospace" font-size="7" font-weight="bold" fill="#1a0e00">OUTATIME</text>
     </svg>
   </div></div>
+
 
 <header>
   <div class="logo">⏰ TIME-SURVEILLANCE CONSOLE <span class="outatime">// OUTATIME</span></div>
@@ -394,6 +409,7 @@ footer{
 </footer>
 
 <script>
+/* ================= DATA ================= */
 const SECTIONS = [
   { code:"SEC-01", label:"OVERVIEW", body:`
     <strong>DESIGNATION:</strong> JUPITER — SOL V &nbsp;|&nbsp; <strong>CLASS:</strong> GAS GIANT<br><br>
@@ -444,6 +460,7 @@ const SECTIONS = [
     McFly family vacation status: <strong>approved, eventually</strong>.` },
 ];
 
+/* ================= KEYPAD ================= */
 const keypad = document.getElementById('keypad');
 SECTIONS.forEach((s,i)=>{
   const b = document.createElement('button');
@@ -467,7 +484,7 @@ function selectSection(i, btn){
 }
 roBody.innerHTML = SECTIONS[0].body;
 
-/* ---- CRT slideshow: changes every 4 seconds ---- */
+/* ================= CRT SLIDESHOW (every 4s) ================= */
 const slides = Array.from(document.querySelectorAll('.slide')),
       dotsBox = document.getElementById('dots'),
       channelBox = document.getElementById('channelBox'),
@@ -496,7 +513,7 @@ function resetTimer(){
 }
 resetTimer();
 
-/* ---- live "Present Time" circuit ---- */
+/* ================= LIVE "PRESENT TIME" CIRCUIT ================= */
 function tick(){
   const n = new Date(),
     M = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
@@ -506,5 +523,43 @@ function tick(){
 }
 tick(); setInterval(tick, 1000);
 </script>
+
+/* ================= RANDOM DELOREAN FLIGHTS + SMART OPACITY ================= */
+const car = document.querySelector('.delorean-layer'),
+      tilt = document.querySelector('.delorean-tilt'),
+      textZones = document.querySelectorAll('.console'); // fade over the text console only (NOT the TV)
+let carAnim, targetOpacity = .9;
+
+function flyOnce(){
+  const W = window.innerWidth, H = window.innerHeight;
+  const carW = car.offsetWidth, carH = carW * (200/340); // svg aspect 340x200
+  const x0 = -(carW + 80),            x1 = W + 80;
+  const y0 = Math.random()*(H - carH), y1 = Math.random()*(H - carH); // random height each side
+  const angle = Math.atan2(y1 - y0, x1 - x0) * 180/Math.PI;
+  const dur = 8000 + Math.random()*6000;
+  tilt.style.transform = `rotate(${angle}deg)`;
+  carAnim = car.animate(
+    [ { transform:`translate(${x0}px, ${y0}px)` },
+      { transform:`translate(${x1}px, ${y1}px)` } ],
+    { duration: dur, easing:'linear' }
+  );
+  carAnim.onfinish = () => setTimeout(flyOnce, 400 + Math.random()*1500); // brief pause, then new random run
+}
+
+/* every frame: dim the car only when it overlaps the text console */
+function opacityTick(){
+  const r = car.getBoundingClientRect();
+  let over = false;
+  for(const z of textZones){
+    const zr = z.getBoundingClientRect();
+    if(r.left < zr.right && r.right > zr.left && r.top < zr.bottom && r.bottom > zr.top){ over = true; break; }
+  }
+  targetOpacity = over ? 0.18 : 0.9;
+  car.style.opacity = parseFloat(car.style.opacity || .9) + (targetOpacity - parseFloat(car.style.opacity || .9)) * 0.25; // smooth fade
+  requestAnimationFrame(opacityTick);
+}
+flyOnce();
+requestAnimationFrame(opacityTick);
+
 </body>
 </html>
