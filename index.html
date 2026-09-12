@@ -1,37 +1,510 @@
-OUTATIME
-⏰ TIME-SURVEILLANCE CONSOLE // OUTATIME
-DESTINATION LOCKED: JUPITER • TEMPORAL COORDINATES VERIFIED BY DR. E. BROWN
-DESTINATION TIME
-OCT 21 2015 04:29
-PRESENT TIME
---- -- ---- --:--
-LAST TIME DEPARTED
-NOV 05 1955 06:38
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OUTATIME // JUPITER TIME-SURVEILLANCE CONSOLE</title>
+<style>
+:root{
+  --void:#070c1c;
+  --panel:#0d1530;
+  --steel1:#9aa4b5; --steel2:#5d6779;
+  --neon:#35d6ff; --neon-dim:rgba(53,214,255,.25);
+  --orange:#ff9d2e; --amber:#ffd23f; --green:#59ff9c; --red:#ff5252;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{
+  font-family:"Courier New",Courier,monospace;
+  background:
+    radial-gradient(circle at 50% -10%, rgba(53,214,255,.12), transparent 55%),
+    radial-gradient(circle at 90% 110%, rgba(255,157,46,.08), transparent 50%),
+    repeating-linear-gradient(0deg, rgba(53,214,255,.05) 0 1px, transparent 1px 44px),
+    repeating-linear-gradient(90deg, rgba(53,214,255,.05) 0 1px, transparent 1px 44px),
+    var(--void);
+  color:#dfe9ff; min-height:100vh; overflow-x:hidden;
+}
 
-[ REPLACE THIS SLIDE WITH YOUR IMAGE ]
+/* ============ FLYING DELOREAN BACKGROUND ============ */
+.delorean-layer{
+  position:fixed; left:0; top:0; z-index:1;
+  width:min(34vw, 340px); pointer-events:none;
+  animation:flyAcross 13s linear infinite;
+  opacity:.9;
+  filter:drop-shadow(0 0 16px rgba(53,214,255,.35));
+}
+@keyframes flyAcross{
+  0%   { transform:translate(-35vw, 105vh) rotate(-32deg); }
+  100% { transform:translate(108vw, -48vh) rotate(-32deg); }
+}
+.delorean-bob{animation:hoverBob 1.6s ease-in-out infinite alternate;}
+@keyframes hoverBob{from{transform:translateY(0);} to{transform:translateY(-9px);}}
+.trail{transform-origin:right center; animation:trailFlick .22s ease-in-out infinite;}
+@keyframes trailFlick{0%,100%{opacity:1; transform:scaleX(1);} 50%{opacity:.55; transform:scaleX(.82);}}
 
-[ REPLACE THIS SLIDE WITH YOUR IMAGE ]
+/* ============ HEADER / TIME CIRCUITS ============ */
+header{padding:22px 26px 8px; text-align:center;}
+.logo{
+  font-size:clamp(20px,3.4vw,34px); font-weight:bold; letter-spacing:6px;
+  color:var(--neon); text-shadow:0 0 12px var(--neon),0 0 40px var(--neon-dim);
+}
+.logo .outatime{color:var(--amber); text-shadow:0 0 12px var(--amber);}
+.tagline{font-size:11px; letter-spacing:4px; color:#7f95c9; margin-top:6px;}
+.circuits{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:18px;
+  margin:20px auto 4px; max-width:1100px;
+}
+.circuit{
+  background:#05070f; border:2px solid #26355e; border-radius:8px;
+  padding:10px 16px; min-width:250px; text-align:left;
+  box-shadow:0 0 18px rgba(0,0,0,.6) inset, 0 0 14px rgba(53,214,255,.08);
+}
+.circuit .row-label{font-size:9px; letter-spacing:3px; margin-bottom:4px;}
+.circuit .digits{
+  font-size:20px; font-weight:bold; letter-spacing:2px; font-family:"Courier New",monospace;
+}
+.c-dest{border-color:#7a3a10;} .c-dest .row-label{color:var(--orange);} .c-dest .digits{color:var(--orange); text-shadow:0 0 10px var(--orange);}
+.c-pres{border-color:#1d6b40;} .c-pres .row-label{color:var(--green);} .c-pres .digits{color:var(--green); text-shadow:0 0 10px var(--green);}
+.c-last{border-color:#8a741a;} .c-last .row-label{color:var(--amber);} .c-last .digits{color:var(--amber); text-shadow:0 0 10px var(--amber);}
 
-[ REPLACE THIS SLIDE WITH YOUR IMAGE ]
-88 MPH... IN SPACE?
-[ REPLACE THIS SLIDE WITH YOUR IMAGE ]
-1.21 GIGAWATTS
-[ REPLACE THIS SLIDE WITH YOUR IMAGE ]
+/* ============ MAIN LAYOUT ============ */
+main{
+  display:grid; grid-template-columns:minmax(320px,470px) 1fr;
+  gap:28px; max-width:1280px; margin:24px auto; padding:0 26px 40px;
+  align-items:start;
+}
+@media(max-width:900px){ main{grid-template-columns:1fr;} }
 
+/* ============ CRT TELEVISION ============ */
+.tv-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.tv{
+  width:100%; max-width:460px;
+  background:linear-gradient(160deg,var(--steel1),var(--steel2) 55%,#3c4453);
+  border-radius:22px; padding:22px 22px 18px;
+  border:3px solid #2b3240;
+  box-shadow:0 14px 40px rgba(0,0,0,.65), 0 0 30px rgba(53,214,255,.10);
+  position:relative;
+}
+.tv::after{
+  content:"PROPERTY OF DOC BROWN • VIDEO TAPE 1985";
+  position:absolute; bottom:4px; left:50%; transform:translateX(-50%);
+  font-size:8px; letter-spacing:2px; color:#2b3240; white-space:nowrap;
+}
+.screen-bezel{
+  background:#1a1f2b; border-radius:18px; padding:12px;
+  border:2px solid #10141d;
+}
+.screen{
+  position:relative; width:100%; aspect-ratio:4/3;
+  background:#02030a; border-radius:12%/16%;
+  overflow:hidden;
+  box-shadow:0 0 24px rgba(53,214,255,.25) inset;
+}
+.scanlines{
+  position:absolute; inset:0; z-index:6; pointer-events:none;
+  background:repeating-linear-gradient(0deg, rgba(0,0,0,.28) 0 2px, transparent 2px 4px);
+  animation:scanmove 8s linear infinite;
+}
+@keyframes scanmove{to{background-position:0 40px;}}
+.vignette{
+  position:absolute; inset:0; z-index:7; pointer-events:none; border-radius:12%/16%;
+  box-shadow:inset 0 0 60px 18px rgba(0,0,0,.85);
+}
+.glass{
+  position:absolute; inset:0; z-index:8; pointer-events:none; border-radius:12%/16%;
+  background:radial-gradient(ellipse at 30% 20%, rgba(255,255,255,.10), transparent 45%);
+}
+.flicker{
+  position:absolute; inset:0; z-index:9; pointer-events:none; background:rgba(120,200,255,.03);
+  animation:flick .12s steps(2) infinite;
+}
+@keyframes flick{50%{opacity:.4;}}
+.slide{
+  position:absolute; inset:0; opacity:0; transform:scale(1.06);
+  transition:opacity .55s ease, transform .55s ease;
+}
+.slide.active{opacity:1; transform:scale(1);}
+.slide svg{width:100%; height:100%; display:block;}
+.slide .swap-note{
+  position:absolute; bottom:8px; left:50%; transform:translateX(-50%);
+  font-size:9px; letter-spacing:2px; color:#eaf6ff; z-index:5;
+  background:rgba(0,0,0,.55); padding:3px 8px; border-radius:3px; white-space:nowrap;
+}
+.tv-controls{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-top:14px; padding:0 6px;
+}
+.knob{
+  width:44px; height:44px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #cfd6e2, #6b7484 60%, #3c4453);
+  border:3px solid #232a37; position:relative;
+  box-shadow:0 3px 8px rgba(0,0,0,.5);
+}
+.knob::after{content:""; position:absolute; top:4px; left:50%; width:4px; height:12px;
+  background:#232a37; transform:translateX(-50%); border-radius:2px;}
+.channel-box{
+  background:#0a0f1e; border:2px solid #26355e; border-radius:6px;
+  padding:6px 14px; font-size:15px; letter-spacing:3px; font-weight:bold;
+  color:var(--green); text-shadow:0 0 8px var(--green); min-width:110px; text-align:center;
+}
+.tv-caption{font-size:11px; letter-spacing:3px; color:#8fb7e8; text-align:center; min-height:15px;}
+.dots{display:flex; gap:8px;}
+.dot{width:9px; height:9px; border-radius:50%; border:1px solid var(--neon); opacity:.35; cursor:pointer;}
+.dot.active{background:var(--neon); box-shadow:0 0 8px var(--neon); opacity:1;}
 
+/* ============ BUTTON KEYPAD ============ */
+.console{background:linear-gradient(180deg,#131b3a,#0a1128); border:2px solid #26355e;
+  border-radius:14px; padding:22px; box-shadow:0 0 24px rgba(0,0,0,.5);}
+.console-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px;}
+.console-head h2{font-size:14px; letter-spacing:4px; color:var(--neon); text-shadow:0 0 8px var(--neon-dim);}
+.flux-status{font-size:10px; letter-spacing:2px; color:var(--amber);}
+.flux-status .bolt{display:inline-block; animation:bolt 1s steps(2) infinite;}
+@keyframes bolt{50%{opacity:.2;}}
+.keypad{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:20px;}
+.tkey{
+  font-family:inherit; cursor:pointer; text-align:left;
+  background:linear-gradient(180deg,#2a3350,#161d36);
+  color:#dfe9ff; border:2px solid #3a4a7a; border-bottom-width:5px;
+  border-radius:10px; padding:12px 14px;
+  transition:transform .08s, box-shadow .15s, border-color .15s;
+}
+.tkey .k-code{display:block; font-size:9px; letter-spacing:3px; color:#6f83b8;}
+.tkey .k-label{display:block; font-size:13px; letter-spacing:2px; font-weight:bold; margin-top:3px;}
+.tkey:hover{border-color:var(--neon); box-shadow:0 0 14px var(--neon-dim);}
+.tkey:active{transform:translateY(3px); border-bottom-width:2px;}
+.tkey.active{
+  background:linear-gradient(180deg,#7a4a12,#4a2c08);
+  border-color:var(--orange); color:#fff3df;
+  box-shadow:0 0 18px rgba(255,157,46,.45);
+}
+.tkey.active .k-code{color:var(--amber);}
 
+/* readout panel */
+.readout{
+  background:#05070f; border:2px solid #26355e; border-radius:10px;
+  padding:20px; min-height:300px; position:relative; overflow:hidden;
+}
+.readout::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(0deg, rgba(53,214,255,.04) 0 2px, transparent 2px 5px);
+}
+.readout-head{display:flex; gap:12px; align-items:center; border-bottom:1px dashed #2c3c6b; padding-bottom:10px; margin-bottom:14px;}
+.readout-code{background:var(--orange); color:#1a0e00; font-size:10px; letter-spacing:2px; padding:4px 8px; border-radius:3px; font-weight:bold;}
+.readout-title{font-size:16px; letter-spacing:4px; color:var(--neon); text-shadow:0 0 10px var(--neon-dim);}
+.readout-body{font-size:13.5px; line-height:1.7; letter-spacing:.4px; color:#c9d8f5;}
+.readout-body strong{color:var(--amber);}
+.readout-body.swap{animation:swapin .35s ease;}
+@keyframes swapin{from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:none;}}
 
+/* flux capacitor */
+.flux{position:fixed; right:18px; bottom:18px; width:90px; z-index:5; opacity:.9; pointer-events:none;}
+.flux .core{animation:fluxpulse 1.2s ease-in-out infinite;}
+@keyframes fluxpulse{0%,100%{opacity:.5;} 50%{opacity:1;}}
+.flux-label{position:fixed; right:16px; bottom:4px; font-size:8px; letter-spacing:2px; color:var(--neon); z-index:5;}
 
-CH 01
+footer{
+  border-top:2px solid #26355e; margin-top:10px; padding:14px 26px;
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  font-size:10px; letter-spacing:3px; color:#5a6a94;
+}
+</style>
+</head>
+<body>
 
-CH 01 — JUPITER FULL DISC
-▚ TEMPORAL DATABASE — SELECT SECTOR ▞
-FLUX CAPACITOR ⚡ CHARGING
-SEC-01
-OVERVIEW
+  <!-- ===== FLYING DELOREAN (bottom-left -> top-right, seamless loop) ===== -->
+  <div class="delorean-layer"><div class="delorean-bob">
+    <svg viewBox="0 0 340 200" aria-hidden="true">
+      <g class="trail">
+        <path d="M118 128 L20 134 L20 118 Z" fill="#ff9d2e" opacity=".85"/>
+        <path d="M118 136 L38 142 L38 128 Z" fill="#ffd23f" opacity=".9"/>
+        <path d="M118 144 L58 150 L58 138 Z" fill="#ff5252" opacity=".8"/>
+        <circle cx="26" cy="126" r="7" fill="#ffd23f" opacity=".7"/>
+        <circle cx="48" cy="140" r="5" fill="#ff9d2e" opacity=".7"/>
+      </g>
+      <path d="M118 96 L150 58 L258 58 L292 96 Z" fill="#8d97a8" stroke="#39404e" stroke-width="4"/>
+      <rect x="112" y="94" width="190" height="40" rx="14" fill="#aab4c4" stroke="#39404e" stroke-width="4"/>
+      <path d="M156 92 L176 66 L246 66 L262 92 Z" fill="#0a1a33" stroke="#39404e" stroke-width="3"/>
+      <path d="M176 66 L186 92" stroke="#39404e" stroke-width="3"/>
+      <path d="M205 96 L205 130" stroke="#39404e" stroke-width="3"/>
+      <rect x="272" y="102" width="22" height="10" rx="3" fill="#35d6ff" opacity=".85"/>
+      <rect x="118" y="102" width="18" height="8" rx="3" fill="#ff5252" opacity=".8"/>
+      <circle cx="150" cy="136" r="15" fill="#232a37" stroke="#10141d" stroke-width="3"/>
+      <circle cx="150" cy="136" r="6" fill="#5d6779"/>
+      <circle cx="262" cy="136" r="15" fill="#232a37" stroke="#10141d" stroke-width="3"/>
+      <circle cx="262" cy="136" r="6" fill="#5d6779"/>
+      <ellipse cx="205" cy="152" rx="80" ry="8" fill="#35d6ff" opacity=".3"/>
+      <rect x="196" y="112" width="34" height="12" rx="2" fill="#ffd23f" stroke="#8a741a" stroke-width="2"/>
+      <text x="213" y="121" text-anchor="middle" font-family="monospace" font-size="7" font-weight="bold" fill="#1a0e00">OUTATIME</text>
+    </svg>
+  </div></div>
 
+<header>
+  <div class="logo">⏰ TIME-SURVEILLANCE CONSOLE <span class="outatime">// OUTATIME</span></div>
+  <div class="tagline">DESTINATION LOCKED: JUPITER • TEMPORAL COORDINATES VERIFIED BY DR. E. BROWN</div>
+  <div class="circuits">
+    <div class="circuit c-dest">
+      <div class="row-label">DESTINATION TIME</div>
+      <div class="digits" id="destTime">OCT 21 2015 04:29</div>
+    </div>
+    <div class="circuit c-pres">
+      <div class="row-label">PRESENT TIME</div>
+      <div class="digits" id="presTime">--- -- ---- --:--</div>
+    </div>
+    <div class="circuit c-last">
+      <div class="row-label">LAST TIME DEPARTED</div>
+      <div class="digits" id="lastTime">NOV 05 1955 06:38</div>
+    </div>
+  </div>
+</header>
 
-FLUX CAPACITOR
-DR. E. BROWN INDUSTRIES — TEMPORAL RESEARCH DIV.
-PLUTONIUM LEVEL: ▓▓▓▓▓░░░░░ 54%
-ROADS? WHERE WE'RE GOING, WE DON'T NEED ROADS.
+<main>
+  <!-- ================= CRT TV ================= -->
+  <div class="tv-wrap">
+    <div class="tv">
+      <div class="screen-bezel">
+        <div class="screen" id="screen">
+
+          <!-- SLIDE 1: Jupiter full disc — REPLACE WITH YOUR PHOTO -->
+          <div class="slide active" data-cap="CH 01 — JUPITER FULL DISC">
+            <svg viewBox="0 0 400 300">
+              <rect width="400" height="300" fill="#04122e"/>
+              <circle cx="70" cy="40" r="1.5" fill="#8fb7e8"/><circle cx="330" cy="60" r="1" fill="#8fb7e8"/>
+              <circle cx="360" cy="230" r="1.5" fill="#8fb7e8"/><circle cx="40" cy="240" r="1" fill="#8fb7e8"/>
+              <circle cx="200" cy="150" r="95" fill="#c98f4e"/>
+              <ellipse cx="200" cy="120" rx="95" ry="14" fill="#e8c188"/>
+              <ellipse cx="200" cy="150" rx="95" ry="10" fill="#a5652f"/>
+              <ellipse cx="200" cy="178" rx="95" ry="13" fill="#e0b075"/>
+              <ellipse cx="245" cy="168" rx="22" ry="13" fill="#c14b2a"/>
+              <ellipse cx="245" cy="168" rx="13" ry="8" fill="#e06a3d"/>
+            </svg>
+            <div class="swap-note">[ REPLACE THIS SLIDE WITH YOUR IMAGE ]</div>
+          </div>
+
+          <!-- SLIDE 2: Great Red Spot — REPLACE WITH YOUR PHOTO -->
+          <div class="slide" data-cap="CH 02 — THE GREAT RED SPOT">
+            <svg viewBox="0 0 400 300">
+              <rect width="400" height="300" fill="#2a1608"/>
+              <ellipse cx="200" cy="80" rx="260" ry="26" fill="#c98f4e"/>
+              <ellipse cx="200" cy="130" rx="260" ry="20" fill="#e8c188"/>
+              <ellipse cx="200" cy="180" rx="260" ry="24" fill="#a5652f"/>
+              <ellipse cx="185" cy="160" rx="58" ry="30" fill="#b03a1e"/>
+              <ellipse cx="185" cy="160" rx="34" ry="17" fill="#e06a3d"/>
+              <ellipse cx="185" cy="160" rx="14" ry="7" fill="#f4a06a"/>
+            </svg>
+            <div class="swap-note">[ REPLACE THIS SLIDE WITH YOUR IMAGE ]</div>
+          </div>
+
+          <!-- SLIDE 3: Europa — REPLACE WITH YOUR PHOTO -->
+          <div class="slide" data-cap="CH 03 — EUROPA: OCEAN WORLD">
+            <svg viewBox="0 0 400 300">
+              <rect width="400" height="300" fill="#020a1c"/>
+              <circle cx="200" cy="150" r="80" fill="#cfc8bb"/>
+              <path d="M140 120 Q200 108 262 124" stroke="#8d8577" stroke-width="4" fill="none"/>
+              <path d="M132 160 Q200 148 268 166" stroke="#8d8577" stroke-width="3" fill="none"/>
+              <path d="M150 195 Q205 186 255 198" stroke="#8d8577" stroke-width="3" fill="none"/>
+              <path d="M180 90 Q190 150 172 222" stroke="#7a7266" stroke-width="5" fill="none"/>
+            </svg>
+            <div class="swap-note">[ REPLACE THIS SLIDE WITH YOUR IMAGE ]</div>
+          </div>
+
+          <!-- SLIDE 4: DeLorean flyby — REPLACE WITH YOUR PHOTO -->
+          <div class="slide" data-cap="CH 04 — DELOREAN FLYBY, JOVIAN SECTOR">
+            <svg viewBox="0 0 400 300">
+              <rect width="400" height="300" fill="#03102a"/>
+              <circle cx="60" cy="50" r="1.5" fill="#8fb7e8"/><circle cx="350" cy="90" r="1" fill="#8fb7e8"/>
+              <circle cx="320" cy="250" r="1.5" fill="#8fb7e8"/>
+              <g transform="translate(150,120) rotate(-18)">
+                <rect x="0" y="20" width="130" height="26" rx="10" fill="#9aa4b5" stroke="#39404e" stroke-width="3"/>
+                <path d="M28 20 L52 -6 L96 -6 L110 20 Z" fill="#5d6779" stroke="#39404e" stroke-width="3"/>
+                <rect x="56" y="0" width="34" height="16" rx="3" fill="#35d6ff" opacity=".7"/>
+                <circle cx="28" cy="48" r="9" fill="#232a37"/><circle cx="100" cy="48" r="9" fill="#232a37"/>
+                <rect x="-40" y="14" width="40" height="8" rx="4" fill="#35d6ff" opacity=".8"/>
+                <rect x="-80" y="17" width="38" height="4" rx="2" fill="#35d6ff" opacity=".4"/>
+              </g>
+              <text x="200" y="250" text-anchor="middle" fill="#59ff9c" font-family="monospace" font-size="13" letter-spacing="3">88 MPH... IN SPACE?</text>
+            </svg>
+            <div class="swap-note">[ REPLACE THIS SLIDE WITH YOUR IMAGE ]</div>
+          </div>
+
+          <!-- SLIDE 5: Flux capacitor — REPLACE WITH YOUR PHOTO -->
+          <div class="slide" data-cap="CH 05 — FLUX CAPACITOR, CHARGED">
+            <svg viewBox="0 0 400 300">
+              <rect width="400" height="300" fill="#05070f"/>
+              <g stroke="#35d6ff" stroke-width="7" fill="none" stroke-linecap="round">
+                <path d="M200 150 L200 60"/>
+                <path d="M200 150 L120 225"/>
+                <path d="M200 150 L280 225"/>
+              </g>
+              <circle cx="200" cy="150" r="13" fill="#35d6ff"/>
+              <circle cx="200" cy="60" r="10" fill="#ffd23f"/>
+              <circle cx="120" cy="225" r="10" fill="#ffd23f"/>
+              <circle cx="280" cy="225" r="10" fill="#ffd23f"/>
+              <text x="200" y="285" text-anchor="middle" fill="#35d6ff" font-family="monospace" font-size="11" letter-spacing="4">1.21 GIGAWATTS</text>
+            </svg>
+            <div class="swap-note">[ REPLACE THIS SLIDE WITH YOUR IMAGE ]</div>
+          </div>
+
+          <!-- CRT overlays -->
+          <div class="scanlines"></div>
+          <div class="vignette"></div>
+          <div class="glass"></div>
+          <div class="flicker"></div>
+        </div>
+      </div>
+      <div class="tv-controls">
+        <div class="knob"></div>
+        <div class="channel-box" id="channelBox">CH 01</div>
+        <div class="knob" style="width:30px;height:30px;"></div>
+      </div>
+    </div>
+    <div class="tv-caption" id="tvCaption">CH 01 — JUPITER FULL DISC</div>
+    <div class="dots" id="dots"></div>
+  </div>
+
+  <!-- ================= KEYPAD + READOUT ================= -->
+  <div class="console">
+    <div class="console-head">
+      <h2>▚ TEMPORAL DATABASE — SELECT SECTOR ▞</h2>
+      <span class="flux-status">FLUX CAPACITOR <span class="bolt">⚡</span> CHARGING</span>
+    </div>
+    <div class="keypad" id="keypad"></div>
+    <div class="readout" id="readout">
+      <div class="readout-head">
+        <span class="readout-code" id="roCode">SEC-01</span>
+        <span class="readout-title" id="roTitle">OVERVIEW</span>
+      </div>
+      <div class="readout-body" id="roBody"></div>
+    </div>
+  </div>
+</main>
+
+<!-- flux capacitor corner ornament -->
+<svg class="flux" viewBox="0 0 100 100">
+  <g class="core" stroke="#35d6ff" stroke-width="5" fill="none" stroke-linecap="round">
+    <path d="M50 50 L50 14"/><path d="M50 50 L20 78"/><path d="M50 50 L80 78"/>
+  </g>
+  <circle cx="50" cy="50" r="7" fill="#35d6ff"/>
+  <circle cx="50" cy="14" r="6" fill="#ffd23f"/><circle cx="20" cy="78" r="6" fill="#ffd23f"/><circle cx="80" cy="78" r="6" fill="#ffd23f"/>
+</svg>
+<div class="flux-label">FLUX CAPACITOR</div>
+
+<footer>
+  <span>DR. E. BROWN INDUSTRIES — TEMPORAL RESEARCH DIV.</span>
+  <span>PLUTONIUM LEVEL: ▓▓▓▓▓░░░░░ 54%</span>
+  <span>ROADS? WHERE WE'RE GOING, WE DON'T NEED ROADS.</span>
+</footer>
+
+<script>
+const SECTIONS = [
+  { code:"SEC-01", label:"OVERVIEW", body:`
+    <strong>DESIGNATION:</strong> JUPITER — SOL V &nbsp;|&nbsp; <strong>CLASS:</strong> GAS GIANT<br><br>
+    The largest planet in the solar system: over <strong>11 Earths wide</strong> and
+    <strong>2.5× the mass of all other planets combined</strong>. It circles the Sun every
+    <strong>11.86 years</strong> but spins once every <strong>9h 55m</strong> — the shortest day of any planet.
+    Its gravity acts as a cosmic <strong>deflector shield</strong>, sweeping comets away from Earth's neighborhood.
+    Doc rates it a "respectable 1.21 gigawatts of a planet."` },
+  { code:"SEC-02", label:"STRUCTURE", body:`
+    <strong>CONFIRMED LAYERS:</strong><br>
+    ▸ <strong>Cloud deck</strong> — ammonia &amp; water-ice bands, ~50 km deep<br>
+    ▸ <strong>Liquid molecular hydrogen</strong> — ~20,000 km of it<br>
+    ▸ <strong>Metallic hydrogen</strong> — crushed until it conducts, powering the biggest magnetosphere around<br>
+    ▸ <strong>Core</strong> — likely a diffuse, "fuzzy" blend of heavy elements<br><br>
+    There is <strong>no surface to stand on</strong>. Descend far enough and the hydrogen ocean simply
+    crushes anything — even a DeLorean.` },
+  { code:"SEC-03", label:"COMPOSITION", body:`
+    <strong>SPECTRAL SCAN RESULTS:</strong><br>
+    ▸ ~<strong>90% hydrogen</strong>, ~<strong>10% helium</strong> — nearly the Sun's recipe<br>
+    ▸ Traces of <strong>methane, ammonia, water vapor, hydrogen sulfide</strong><br>
+    ▸ Frozen <strong>ammonia crystals</strong> paint the pale upper clouds; sulfur &amp; phosphorus compounds
+    stain the bands amber and brown<br><br>
+    In other words: a <strong>failed star</strong>. It would need ~80× more mass to light the fusion ignition.` },
+  { code:"SEC-04", label:"POSSIBILITY OF LIFE", body:`
+    <strong>ON JUPITER ITSELF: ≈ 0.00%</strong><br><br>
+    ▸ No surface, 1,500 km/h winds, radiation belts that fry circuits in minutes<br><br>
+    <strong>MOON FOLLOW-UP — PRIORITY RED:</strong><br>
+    ▸ <strong>Europa</strong> — a global saltwater ocean under the ice; the system's best shot at microbial life.
+    <strong>Europa Clipper</strong> &amp; <strong>JUICE</strong> are already en route.<br>
+    ▸ <strong>Ganymede</strong> &amp; <strong>Callisto</strong> may hide oceans too.<br><br>
+    Great Scott — the life may be next door, not on the planet itself!` },
+  { code:"SEC-05", label:"ATMOSPHERE", body:`
+    <strong>CONDITION REPORT:</strong><br>
+    ▸ Counter-rotating <strong>jet-stream bands</strong> whipped by the 10-hour spin<br>
+    ▸ Storms the size of continents — the <strong>Great Red Spot</strong> has burned for 300+ years<br>
+    ▸ Polar <strong>lightning</strong> ~10× Earth's power<br>
+    ▸ Auroras at both poles, the strongest in the solar system<br><br>
+    At the cloud tops pressure reads ~<strong>0.5–1 bar</strong> — the one altitude where
+    a vessel could theoretically <strong>float</strong>.` },
+  { code:"SEC-06", label:"LIVING ARRANGEMENTS", body:`
+    <strong>COLONIZATION FEASIBILITY:</strong><br>
+    ▸ Jupiter proper: uninhabitable. Best sci-fi option: <strong>aerostat cities</strong>
+    riding the ~1-bar cloud layer — radiation shelter required<br><br>
+    <strong>RECOMMENDED POSTING:</strong><br>
+    ▸ Bases on the <strong>Galilean moons</strong> — Callisto (lowest radiation),
+    Ganymede (its own magnetic field), Europa (under-ice stations)<br>
+    ▸ Robotic skimmers could harvest <strong>helium-3</strong> from the cloud tops for fuel<br><br>
+    McFly family vacation status: <strong>approved, eventually</strong>.` },
+];
+
+const keypad = document.getElementById('keypad');
+SECTIONS.forEach((s,i)=>{
+  const b = document.createElement('button');
+  b.className = 'tkey' + (i===0 ? ' active' : '');
+  b.innerHTML = `<span class="k-code">${s.code}</span><span class="k-label">${s.label}</span>`;
+  b.addEventListener('click', ()=>selectSection(i, b));
+  keypad.appendChild(b);
+});
+
+const roCode = document.getElementById('roCode'),
+      roTitle = document.getElementById('roTitle'),
+      roBody = document.getElementById('roBody');
+
+function selectSection(i, btn){
+  document.querySelectorAll('.tkey').forEach(k=>k.classList.remove('active'));
+  btn.classList.add('active');
+  roCode.textContent = SECTIONS[i].code;
+  roTitle.textContent = SECTIONS[i].label;
+  roBody.innerHTML = SECTIONS[i].body;
+  roBody.classList.remove('swap'); void roBody.offsetWidth; roBody.classList.add('swap');
+}
+roBody.innerHTML = SECTIONS[0].body;
+
+/* ---- CRT slideshow: changes every 4 seconds ---- */
+const slides = Array.from(document.querySelectorAll('.slide')),
+      dotsBox = document.getElementById('dots'),
+      channelBox = document.getElementById('channelBox'),
+      caption = document.getElementById('tvCaption');
+let cur = 0, slideTimer;
+
+slides.forEach((_,i)=>{
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' active':'');
+  d.addEventListener('click', ()=>{ showSlide(i); resetTimer(); });
+  dotsBox.appendChild(d);
+});
+const dots = Array.from(dotsBox.children);
+
+function showSlide(i){
+  slides[cur].classList.remove('active'); dots[cur].classList.remove('active');
+  cur = i;
+  slides[cur].classList.add('active'); dots[cur].classList.add('active');
+  const ch = String(cur+1).padStart(2,'0');
+  channelBox.textContent = 'CH ' + ch;
+  caption.textContent = slides[cur].dataset.cap;
+}
+function resetTimer(){
+  clearInterval(slideTimer);
+  slideTimer = setInterval(()=>showSlide((cur+1)%slides.length), 4000);
+}
+resetTimer();
+
+/* ---- live "Present Time" circuit ---- */
+function tick(){
+  const n = new Date(),
+    M = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+  const p = v => String(v).padStart(2,'0');
+  document.getElementById('presTime').textContent =
+    `${M[n.getMonth()]} ${p(n.getDate())} ${n.getFullYear()} ${p(n.getHours())}:${p(n.getMinutes())}`;
+}
+tick(); setInterval(tick, 1000);
+</script>
+</body>
+</html>
